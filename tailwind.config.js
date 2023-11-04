@@ -5,6 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    extend: {
+      fontFamily: {
+        'agbalumo': ['"Agbalumo"', 'cursive']
+      }
+    },
     colors: {
       'main-dark': '#000',
       'secondary-dark': 'bg-stone-500',
