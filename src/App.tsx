@@ -5,7 +5,7 @@ export default function App() {
         <h1 className="text-main-text-dark text-2xl font-agbalumo">My Todo App</h1>
       </header>
       <div>
-        
+       
       </div>
     </div>
   )
