@@ -11,9 +11,12 @@ export default {
       }
     },
     colors: {
-      'main-dark': '#000',
-      'secondary-dark': 'bg-stone-500',
-      'main-text-dark': '#fff',
+      'main': '#000',
+      'secondary': 'rgb(23 23 23)',
+      'main-text': '#fff',
+      'urgent': 'rgb(220 38 38)',
+      'white': '#fff',
+      'blue': 'rgb(30 64 175)'
     },
   },
   plugins: [],
