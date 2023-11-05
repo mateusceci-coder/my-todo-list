@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from 'react'
 
 type TodoFormProps = {
     setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    setTodos: React.Dispatch<React.SetStateAction<{title: string, task: string, status: string}[]>>,
+    setTodos: React.Dispatch<React.SetStateAction<{id: string, title: string, task: string, status: string}[]>>,
 }
 
 
@@ -31,7 +31,9 @@ export default function TodoForm({ setIsFormOpen, setTodos }: TodoFormProps) {
     }
    
     const addNewTodo = () => {
-        setTodos((todos) => [...todos, {title: title, task: task, status: statusValue}])
+        if (!title || !task) return
+        
+        setTodos((todos) => [...todos, {id: crypto.randomUUID(), title: title, task: task, status: statusValue}])
         setIsFormOpen(false)
     }
 

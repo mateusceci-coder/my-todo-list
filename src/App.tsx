@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 export default function App() {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false)
-  const [todos, setTodos] = useState<{title: string, task: string, status: string}[]>([])
+  const [todos, setTodos] = useState<{id: string, title: string, task: string, status: string}[]>([])
 
   const handleFormOpen = () => {
     setIsFormOpen(true)
@@ -25,7 +25,7 @@ export default function App() {
         <ul className='grid gap-2'>
           {todos.map((todo) => {
             return (
-              <TodoItem key={todo.title} title={todo.title} task={todo.task} status={todo.status} />
+              <TodoItem key={todo.title} title={todo.title} task={todo.task} status={todo.status} id={todo.id} setTodos={setTodos}/>
             )
           })}
         </ul>
