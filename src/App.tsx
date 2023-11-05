@@ -1,18 +1,17 @@
 import { PlusCircle, ListFilter, Search } from 'lucide-react'
 import Header from './layout/Header'
-import { useState } from 'react'
 import TodoForm from './components/TodoForm'
 import TodoItem from './components/TodoItem'
+import { useState } from 'react'
 
 export default function App() {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false)
   const [todos, setTodos] = useState<{title: string, task: string, status: string}[]>([])
 
-
   const handleFormOpen = () => {
     setIsFormOpen(true)
   }
-  
+
   return (
     <div className="bg-main h-screen w-100 text-main-text p-3 overflow-y-scroll">
       <Header />

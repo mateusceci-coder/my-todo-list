@@ -18,8 +18,7 @@ export default function TodoItem({title, task, status}: TodoItemProps) {
                 </div>
             </div>
             <p className='mb-2'>{task}</p>
-            <p>{status}</p>
-            <StatusItem />
+            <StatusItem status={status} />
         </li>
     )
 }

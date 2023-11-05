@@ -11,7 +11,7 @@ type TodoFormProps = {
 export default function TodoForm({ setIsFormOpen, setTodos }: TodoFormProps) {
     const [title, setTitle] = useState("")
     const [task, setTask] = useState("")
-    const [statusValue, setStatusValue] = useState("Urgent")
+    const [statusValue, setStatusValue] = useState("urgent")
     
 
     const handleCloseForm = () => {
@@ -57,7 +57,7 @@ export default function TodoForm({ setIsFormOpen, setTodos }: TodoFormProps) {
                 </select>
             </div>
             <div className='flex justify-end'>
-                <button onClick={() => addNewTodo()} className='hover:cursor-pointer hover:brightness-125 bg-blue text-main-text rounded-xl p-1'>Add New Todo</button>
+                <button onClick={() => addNewTodo()} className='hover:cursor-pointer hover:brightness-125 bg-important text-main-text rounded-xl p-1'>Add New Todo</button>
             </div>
         </div>
     )
