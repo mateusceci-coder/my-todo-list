@@ -38,17 +38,17 @@ export default function TodoForm({ setIsFormOpen, setTodos }: TodoFormProps) {
     }
 
     return (
-        <div className="flex justify-center p-2 flex-col bg-white text-main rounded-xl mb-2">
+        <div className="flex justify-center p-2 flex-col bg-white text-main rounded-xl my-2 mx-auto max-w-lg">
             <div className='flex justify-end'>
                 <X color='red'onClick={handleCloseForm}/>
             </div>
             <div className="mb-2">
                 <label className="block" htmlFor="title">Title:</label>
-                <input type="text" className="border-main border-2 rounded-xl p-1" value={title} onChange={handleInputChange}/>
+                <input type="text" className="border-main border-2 rounded-xl p-1 w-full" value={title} onChange={handleInputChange}/>
             </div>
             <div>
                 <label className="block" htmlFor="task">Task:</label>
-                <textarea value={task} onChange={handleTextChange} className="rounded border-2 border-main p-1"></textarea>
+                <textarea maxLength={100} value={task} onChange={handleTextChange} className="rounded border-2 border-main p-1 w-full"></textarea>
             </div>
             <div>
                 <label htmlFor="status">Status: </label>

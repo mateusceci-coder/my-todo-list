@@ -16,7 +16,7 @@ export default function TodoItem({id, title, task, status, setTodos}: TodoItemPr
     }
 
     return (
-        <li className='max-h-52 w-100 bg-secondary rounded-lg p-2 text-ellipsis overflow-y-hidden'>
+        <li className='max-h-52 bg-secondary rounded-lg p-2 text-ellipsis overflow-y-hidden break-all max-w-md'>
             <div className='flex justify-between pb-2'>
                 <h2 className='font-agbalumo text-xl'>{title}</h2>
                 <div className='flex gap-4'>

@@ -22,7 +22,7 @@ export default function App() {
       </div>
       <div>
         {isFormOpen && <TodoForm setIsFormOpen={setIsFormOpen} setTodos={setTodos} />}
-        <ul className='grid gap-2'>
+        <ul className='grid gap-2 md:grid-cols-2'>
           {todos.map((todo) => {
             return (
               <TodoItem key={todo.title} title={todo.title} task={todo.task} status={todo.status} id={todo.id} setTodos={setTodos}/>
