@@ -15,14 +15,14 @@ type FormTodoContextType = {
 
 const FormTodoContext = createContext<FormTodoContextType | null>(null)
 
-export function useFormTodoContext() {
+function useFormTodoContext() {
     const value = useContext(FormTodoContext)
     if (value == null) throw new Error("Cannot use outside of Provider")
 
     return value
 }
 
-export function FormTodoProvider ({children}: FormTodoProviderProps) {
+function FormTodoProvider ({children}: FormTodoProviderProps) {
     const [isFormOpen, setIsFormOpen] = useState<boolean>(false)
     const [todos, setTodos] = useState<{id:string, title: string, task: string, status: string}[]>([])
 
@@ -51,3 +51,5 @@ export function FormTodoProvider ({children}: FormTodoProviderProps) {
         </FormTodoContext.Provider>
       )
 }
+
+export { useFormTodoContext, FormTodoProvider }

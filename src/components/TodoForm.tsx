@@ -1,23 +1,14 @@
 import { X } from 'lucide-react'
 import { ChangeEvent, useState } from 'react'
+import { useFormTodoContext } from '../contexts/Formcontext'
 
-
-type TodoFormProps = {
-    setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    setTodos: React.Dispatch<React.SetStateAction<{id: string, title: string, task: string, status: string}[]>>,
-}
-
-
-export default function TodoForm({ setIsFormOpen, setTodos }: TodoFormProps) {
+export default function TodoForm() {
     const [title, setTitle] = useState("")
     const [task, setTask] = useState("")
     const [statusValue, setStatusValue] = useState("urgent")
+    const { handleCloseForm, addNewTodo } = useFormTodoContext()
+
     
-
-    const handleCloseForm = () => {
-        setIsFormOpen(false)
-    }
-
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value)
     }
@@ -30,12 +21,6 @@ export default function TodoForm({ setIsFormOpen, setTodos }: TodoFormProps) {
         setStatusValue(e.target.value)
     }
    
-    const addNewTodo = () => {
-        if (!title || !task) return
-        
-        setTodos((todos) => [...todos, {id: crypto.randomUUID(), title: title, task: task, status: statusValue}])
-        setIsFormOpen(false)
-    }
 
     return (
         <div className="flex justify-center p-2 flex-col bg-white text-main rounded-xl my-2 mx-auto max-w-lg">
@@ -59,7 +44,7 @@ export default function TodoForm({ setIsFormOpen, setTodos }: TodoFormProps) {
                 </select>
             </div>
             <div className='flex justify-end'>
-                <button onClick={() => addNewTodo()} className='hover:cursor-pointer hover:brightness-125 bg-important text-main-text rounded-xl p-1'>Add New Todo</button>
+                <button onClick={() => addNewTodo(title, task, statusValue)} className='hover:cursor-pointer hover:brightness-125 bg-important text-main-text rounded-xl p-1'>Add New Todo</button>
             </div>
         </div>
     )

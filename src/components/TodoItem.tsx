@@ -1,19 +1,16 @@
 import { Check, X } from 'lucide-react'
 import StatusItem from './StatusItem'
+import { useFormTodoContext } from '../contexts/Formcontext'
 
 type TodoItemProps = {
     title: string,
     task: string,
     status: string,
     id: string,
-    setTodos: React.Dispatch<React.SetStateAction<{id: string, title: string, task: string, status: string}[]>>
 }
 
-export default function TodoItem({id, title, task, status, setTodos}: TodoItemProps) {
-
-    const handleDeleteTodo = (id: string) => {
-        setTodos((todos) => todos.filter((todo) => todo.id !== id))
-    }
+export default function TodoItem({id, title, task, status}: TodoItemProps) {
+    const { handleDeleteTodo } = useFormTodoContext()
 
     return (
         <li className='max-h-52 bg-secondary rounded-lg p-2 text-ellipsis overflow-y-hidden break-all max-w-md'>
