@@ -10,7 +10,8 @@ type FormTodoContextType = {
     handleFormOpen: () => void,
     handleDeleteTodo: (id:string) => void,
     handleCloseForm: () => void,
-    addNewTodo: (title: string, task: string, statusValue: string) => void
+    addNewTodo: (title: string, task: string, statusValue: string) => void,
+    handleFinishedTodo: (id:string) => void
 }
 
 const FormTodoContext = createContext<FormTodoContextType | null>(null)
@@ -45,8 +46,18 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
         setIsFormOpen(false)
     }
 
+    const handleFinishedTodo = (id:string) => {
+        const finishedTodo = todos.map((todo) => {
+            if(todo.id === id) {
+                return {...todo, status: "finished"}
+            }
+            return todo
+        })
+        setTodos(finishedTodo)
+    }
+
       return (
-        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo}}>
+        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo, handleFinishedTodo}}>
             {children}
         </FormTodoContext.Provider>
       )

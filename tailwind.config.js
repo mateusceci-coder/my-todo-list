@@ -17,6 +17,7 @@ export default {
       "urgent": 'rgb(220, 38, 38)',
       "important": 'rgb(30, 64, 175)',
       "normal": 'rgb(22, 101, 52)',
+      "finished": "rgb(202, 138, 4)",
       'white': '#fff',
     },
   },

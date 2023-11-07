@@ -10,14 +10,14 @@ type TodoItemProps = {
 }
 
 export default function TodoItem({id, title, task, status}: TodoItemProps) {
-    const { handleDeleteTodo } = useFormTodoContext()
+    const { handleDeleteTodo, handleFinishedTodo } = useFormTodoContext()
 
     return (
         <li className='max-h-52 bg-secondary rounded-lg p-2 text-ellipsis overflow-y-hidden break-all max-w-md'>
             <div className='flex justify-between pb-2'>
-                <h2 className='font-agbalumo text-xl'>{title}</h2>
+                <h2 className={`font-agbalumo text-xl ${status === "finished" ? "line-through" : "" }`}>{title}</h2>
                 <div className='flex gap-4'>
-                    <Check className='hover: cursor-pointer' color='green' />
+                    <Check className='hover: cursor-pointer' color='green' onClick={() => handleFinishedTodo(id)} />
                     <X className='hover: cursor-pointer' color='red' onClick={() => handleDeleteTodo(id)} />
                 </div>
             </div>
