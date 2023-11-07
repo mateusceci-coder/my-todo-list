@@ -19,6 +19,7 @@ export default {
       "normal": 'rgb(22, 101, 52)',
       "finished": "rgb(202, 138, 4)",
       'white': '#fff',
+      "yellow": "rgb(234 179 8)"
     },
   },
   plugins: [],
