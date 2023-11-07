@@ -7,11 +7,13 @@ type FormTodoProviderProps = {
 type FormTodoContextType = {
     isFormOpen: boolean,
     todos: {id: string, title: string; task: string; status: string; }[],
+    isInputOpen: boolean,
     handleFormOpen: () => void,
     handleDeleteTodo: (id:string) => void,
     handleCloseForm: () => void,
     addNewTodo: (title: string, task: string, statusValue: string) => void,
-    handleFinishedTodo: (id:string) => void
+    handleFinishedTodo: (id:string) => void,
+    handleInputOpen: () => void
 }
 
 const FormTodoContext = createContext<FormTodoContextType | null>(null)
@@ -26,6 +28,7 @@ function useFormTodoContext() {
 function FormTodoProvider ({children}: FormTodoProviderProps) {
     const [isFormOpen, setIsFormOpen] = useState<boolean>(false)
     const [todos, setTodos] = useState<{id:string, title: string, task: string, status: string}[]>([])
+    const [isInputOpen, setIsInputOpen] = useState<boolean>(false)
 
     const handleFormOpen = () => {
         setIsFormOpen(true)
@@ -56,8 +59,12 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
         setTodos(finishedTodo)
     }
 
+    const handleInputOpen = () => {
+        setIsInputOpen((i) => !i)
+    }
+
       return (
-        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo, handleFinishedTodo}}>
+        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo, handleFinishedTodo, handleInputOpen, isInputOpen}}>
             {children}
         </FormTodoContext.Provider>
       )
