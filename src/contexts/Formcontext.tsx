@@ -13,7 +13,9 @@ type FormTodoContextType = {
     handleCloseForm: () => void,
     addNewTodo: (title: string, task: string, statusValue: string) => void,
     handleFinishedTodo: (id:string) => void,
-    handleInputOpen: () => void
+    handleInputOpen: () => void,
+    handleSearchText: (title:string) => void,
+    query: {id: string, title: string; task: string; status: string; }[],
 }
 
 const FormTodoContext = createContext<FormTodoContextType | null>(null)
@@ -29,6 +31,7 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
     const [isFormOpen, setIsFormOpen] = useState<boolean>(false)
     const [todos, setTodos] = useState<{id:string, title: string, task: string, status: string}[]>([])
     const [isInputOpen, setIsInputOpen] = useState<boolean>(false)
+    const [query, setQuery] = useState<{id:string, title: string, task: string, status: string}[]>([])
 
     const handleFormOpen = () => {
         setIsFormOpen(true)
@@ -63,8 +66,12 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
         setIsInputOpen((i) => !i)
     }
 
+    const handleSearchText = (title:string) => {
+        setQuery(todos.filter((todo) => todo.title.includes(title)))
+    }
+
       return (
-        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo, handleFinishedTodo, handleInputOpen, isInputOpen}}>
+        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo, handleFinishedTodo, handleInputOpen, isInputOpen, handleSearchText, query}}>
             {children}
         </FormTodoContext.Provider>
       )
