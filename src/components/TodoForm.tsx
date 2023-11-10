@@ -23,7 +23,7 @@ export default function TodoForm() {
    
 
     return (
-        <div className="flex justify-center p-2 flex-col bg-white text-main rounded-xl my-2 mx-auto max-w-lg">
+        <div className="flex justify-center p-2 flex-col bg-white text-main rounded-xl my-2 mx-auto w-11/12 max-w-lg">
             <div className='flex justify-end'>
                 <X color='red'onClick={handleCloseForm} className='cursor-pointer'/>
             </div>
