@@ -2,6 +2,7 @@ type StatusItemProps = {
     status:string,
 }
 
+
 export default function StatusItem({status}: StatusItemProps) {
     return (
         <div className="flex justify-end">

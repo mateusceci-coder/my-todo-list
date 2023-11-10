@@ -40,6 +40,7 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
 
     const handleDeleteTodo = (id: string) => {
         setTodos((todos) => todos.filter((todo) => todo.id !== id))
+        setQuery((query) => query.filter((todo) => todo.id !== id))
     }
 
     const handleCloseForm = () => {
@@ -61,10 +62,19 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
             return todo
         })
         setTodos(finishedTodo)
+
+        const finishedQuery = query.map((query) => {
+            if(query.id === id) {
+                return {...query, status: "finished"}
+            }
+            return query
+        })
+        setQuery(finishedQuery)
     }
 
     const handleInputOpen = () => {
         setIsInputOpen((i) => !i)
+        setQuery([])
     }
 
     const handleSearchText = (title:string) => {

@@ -21,13 +21,13 @@ export default function TodoList() {
         </div>
         )}
         <ul className='grid gap-2 sm:grid-cols-2 md:grid-cols-3'>
-            {!isInputOpen && query.length === 0 ? todos.map((todo) => {
+            {!isInputOpen ? todos.map((todo) => {
             return (
-                <TodoItem key={todo.title} title={todo.title} task={todo.task} status={todo.status} id={todo.id}/>
+                <TodoItem key={todo.id} title={todo.title} task={todo.task} status={todo.status} id={todo.id}/>
             )
             }) : query.map((queryItem) => {
             return (
-                <TodoItem key={queryItem.title} title={queryItem.title} task={queryItem.task} status={queryItem.status} id={queryItem.id}/>
+                <TodoItem key={queryItem.id} title={queryItem.title} task={queryItem.task} status={queryItem.status} id={queryItem.id}/>
             )
             })}
         </ul>
