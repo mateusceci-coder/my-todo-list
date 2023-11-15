@@ -6,7 +6,7 @@ type FormTodoProviderProps = {
 
 type FormTodoContextType = {
     isFormOpen: boolean,
-    todos: {id: string, title: string; task: string; status: string; }[],
+    todos: Params[],
     isInputOpen: boolean,
     handleFormOpen: () => void,
     handleDeleteTodo: (id:string) => void,
@@ -15,8 +15,15 @@ type FormTodoContextType = {
     handleFinishedTodo: (id:string) => void,
     handleInputOpen: () => void,
     handleSearchText: (title:string) => void,
-    query: {id: string, title: string; task: string; status: string; }[],
+    query: Params[],
     clearFinished: () => void
+}
+
+type Params = {
+    id: string,
+    title: string,
+    task: string,
+    status: string
 }
 
 const FormTodoContext = createContext<FormTodoContextType | null>(null)
@@ -30,9 +37,9 @@ function useFormTodoContext() {
 
 function FormTodoProvider ({children}: FormTodoProviderProps) {
     const [isFormOpen, setIsFormOpen] = useState<boolean>(false)
-    const [todos, setTodos] = useState<{id:string, title: string, task: string, status: string}[]>([])
+    const [todos, setTodos] = useState<Params[]>([])
     const [isInputOpen, setIsInputOpen] = useState<boolean>(false)
-    const [query, setQuery] = useState<{id:string, title: string, task: string, status: string}[]>([])
+    const [query, setQuery] = useState<Params[]>([])
 
     const handleFormOpen = () => {
         setIsFormOpen(true)
