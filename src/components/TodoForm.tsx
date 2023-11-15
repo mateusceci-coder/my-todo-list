@@ -23,20 +23,20 @@ export default function TodoForm() {
    
 
     return (
-        <div className="flex justify-center p-2 flex-col bg-white text-main rounded-xl my-2 mx-auto w-11/12 max-w-lg">
+        <div className="flex justify-center p-2 flex-col bg-black dark:bg-white text-black rounded-xl my-2 mx-auto w-11/12 max-w-lg">
             <div className='flex justify-end'>
                 <X color='red'onClick={handleCloseForm} className='cursor-pointer'/>
             </div>
             <div className="mb-2">
-                <label className="block" htmlFor="title">Title:</label>
-                <input type="text" className="border-main border-2 rounded-xl p-1 w-full" value={title} onChange={handleInputChange}/>
+                <label className="block text-white dark:text-black" htmlFor="title">Title:</label>
+                <input type="text" className="border-white dark:border-main border-2 rounded-xl p-1 w-full" value={title} onChange={handleInputChange}/>
             </div>
             <div>
-                <label className="block" htmlFor="task">Task:</label>
+                <label className="block text-white dark:text-black" htmlFor="task">Task:</label>
                 <textarea maxLength={100} value={task} onChange={handleTextChange} className="rounded border-2 border-main p-1 w-full"></textarea>
             </div>
             <div>
-                <label htmlFor="status">Status: </label>
+                <label htmlFor="status" className='text-white dark:text-black'>Status: </label>
                 <select value={statusValue} onChange={handleSelectChange} className="text-main">
                     <option value="urgent">Urgent</option>
                     <option value="important">Important</option>

@@ -5,7 +5,7 @@ import TodoForm from "../components/TodoForm"
 
 
 export default function TodoList() {
-    const { isInputOpen, query, todos, isFormOpen } = useFormTodoContext()
+    const { isInputOpen, query, todos, isFormOpen, darkMode } = useFormTodoContext()
 
   return (
     <div className='max-w-5xl mx-auto'>
@@ -16,8 +16,8 @@ export default function TodoList() {
         )}
         {todos.length === 0 && (
         <div className='flex flex-col justify-center items-center mt-10 gap-2'>
-            <MoveUp size={48} width={48} />
-            <h1 className='text-main-text font-agbalumo text-2xl'>No pending tasks. Add some!</h1>
+            <MoveUp size={48} width={48} color={`${darkMode ? "white" : "black"}`} />
+            <h1 className='text-main dark:text-main-text font-agbalumo text-2xl'>No pending tasks. Add some!</h1>
         </div>
         )}
         <ul className='grid gap-2 sm:grid-cols-2 md:grid-cols-3'>

@@ -16,7 +16,9 @@ type FormTodoContextType = {
     handleInputOpen: () => void,
     handleSearchText: (title:string) => void,
     query: Params[],
-    clearFinished: () => void
+    clearFinished: () => void,
+    handleDarkMode: () => void,
+    darkMode: boolean,
 }
 
 type Params = {
@@ -40,6 +42,11 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
     const [todos, setTodos] = useState<Params[]>([])
     const [isInputOpen, setIsInputOpen] = useState<boolean>(false)
     const [query, setQuery] = useState<Params[]>([])
+    const [darkMode, setDarkMode] = useState<boolean>(true)
+
+    const handleDarkMode = () => {
+        setDarkMode((dark) => !dark)
+    }
 
     const handleFormOpen = () => {
         setIsFormOpen(true)
@@ -93,7 +100,7 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
     }
 
       return (
-        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo, handleFinishedTodo, handleInputOpen, isInputOpen, handleSearchText, query, clearFinished}}>
+        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo, handleFinishedTodo, handleInputOpen, isInputOpen, handleSearchText, query, clearFinished, handleDarkMode, darkMode}}>
             {children}
         </FormTodoContext.Provider>
       )
