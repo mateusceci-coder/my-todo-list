@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 
 type FormTodoProviderProps = {
     children: ReactNode
@@ -39,10 +39,19 @@ function useFormTodoContext() {
 
 function FormTodoProvider ({children}: FormTodoProviderProps) {
     const [isFormOpen, setIsFormOpen] = useState<boolean>(false)
-    const [todos, setTodos] = useState<Params[]>([])
     const [isInputOpen, setIsInputOpen] = useState<boolean>(false)
     const [query, setQuery] = useState<Params[]>([])
     const [darkMode, setDarkMode] = useState<boolean>(true)
+    const [todos, setTodos] = useState(() => {
+        const localValue = localStorage.getItem("ITEMS")
+        if (localValue == null) return []
+    
+        return JSON.parse(localValue)
+      })
+    
+      useEffect(() => {
+        localStorage.setItem("ITEMS", JSON.stringify(todos))
+      }, [todos])
 
     const handleDarkMode = () => {
         setDarkMode((dark) => !dark)
