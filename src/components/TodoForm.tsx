@@ -1,4 +1,4 @@
-import { X } from 'lucide-react'
+import { AlertCircle, X } from 'lucide-react'
 import { ChangeEvent, useState } from 'react'
 import { useFormTodoContext } from '../contexts/Formcontext'
 
@@ -6,7 +6,7 @@ export default function TodoForm() {
     const [title, setTitle] = useState("")
     const [task, setTask] = useState("")
     const [statusValue, setStatusValue] = useState("urgent")
-    const { handleCloseForm, addNewTodo } = useFormTodoContext()
+    const { handleCloseForm, addNewTodo, emptyField } = useFormTodoContext()
 
     
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,11 @@ export default function TodoForm() {
                     <option value="normal">Normal</option>
                 </select>
             </div>
-            <div className='flex justify-end'>
+            <div className={`flex ${emptyField ? "justify-between" : "justify-end"} py-1`}>
+                {emptyField && <div className='flex gap-2'>
+                    <AlertCircle  color='red'/>
+                    <p className='text-sm text-red-500'>Please, fill in all fields</p>
+                </div>}
                 <button onClick={() => addNewTodo(title, task, statusValue)} className='hover:cursor-pointer hover:brightness-125 bg-important text-main-text rounded-xl p-1'>Add New Todo</button>
             </div>
         </div>

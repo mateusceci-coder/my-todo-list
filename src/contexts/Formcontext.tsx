@@ -19,6 +19,7 @@ type FormTodoContextType = {
     clearFinished: () => void,
     handleDarkMode: () => void,
     darkMode: boolean,
+    emptyField: boolean,
 }
 
 type Params = {
@@ -34,6 +35,7 @@ interface State {
     query: Params[]; 
     todos: Params[];
     darkMode: boolean;
+    emptyField: boolean
 }
 
 interface Action {
@@ -47,13 +49,14 @@ const initialState: State = {
     query: [],
     todos: [],
     darkMode: true,
+    emptyField: false
 }
 
 function reducer(state: State, action: Action) {
     switch (action.type) {
         case "formOpen":
             return {
-                ...state, isFormOpen: !state.isFormOpen
+                ...state, isFormOpen: !state.isFormOpen, emptyField: false
             }
 
         case "isDarkMode":
@@ -69,7 +72,7 @@ function reducer(state: State, action: Action) {
 
         case "newTodo":
             return {
-                ...state, todos: [...state.todos, action.payload], isFormOpen: false
+                ...state, todos: [...state.todos, action.payload], isFormOpen: false, emptyField: false
             }
 
         case "finishedTodo":
@@ -104,6 +107,11 @@ function reducer(state: State, action: Action) {
                 ...state, todos: state.todos.filter((todo) => todo.status !== "finished")
             }
 
+        case "emptyFieldText":
+            return {
+                ...state, emptyField: true
+            }
+
         default:
             throw new Error("Unknown action type")
     }
@@ -119,7 +127,7 @@ function useFormTodoContext() {
 }
 
 function FormTodoProvider ({children}: FormTodoProviderProps) {
-    const [{ query, todos, darkMode, isFormOpen, isInputOpen }, dispatch] = useReducer(reducer, initialState)
+    const [{ query, todos, darkMode, isFormOpen, isInputOpen, emptyField }, dispatch] = useReducer(reducer, initialState)
     
     const handleDarkMode = () => {
         dispatch({ type: "isDarkMode" })
@@ -138,10 +146,11 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
     }
     
     const addNewTodo = (title: string, task: string, statusValue: string) => {
-        if (!title || !task) return
-    
-        dispatch({ type: "newTodo", payload: {id: crypto.randomUUID(), title: title, task: task, status: statusValue} })
-        
+        if (!title || !task) {
+            dispatch({ type: "emptyFieldText" })
+        } else {
+            dispatch({ type: "newTodo", payload: {id: crypto.randomUUID(), title: title, task: task, status: statusValue} })
+        }
     }
     
     const handleFinishedTodo = (id:string) => {
@@ -161,7 +170,7 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
     }
 
       return (
-        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo, handleFinishedTodo, handleInputOpen, isInputOpen, handleSearchText, query, clearFinished, handleDarkMode, darkMode}}>
+        <FormTodoContext.Provider value={{isFormOpen, todos, handleFormOpen, handleDeleteTodo, handleCloseForm, addNewTodo, handleFinishedTodo, handleInputOpen, isInputOpen, handleSearchText, query, clearFinished, handleDarkMode, darkMode, emptyField}}>
             {children}
         </FormTodoContext.Provider>
       )
