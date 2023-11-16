@@ -63,6 +63,7 @@ function FormTodoProvider ({children}: FormTodoProviderProps) {
 
     const addNewTodo = (title: string, task: string, statusValue: string) => {
         if (!title || !task) return
+
         
         setTodos((todos) => [...todos, {id: crypto.randomUUID(), title: title, task: task, status: statusValue}])
         setIsFormOpen(false)
