@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useState, useEffect } from "react";
+import { ReactNode, createContext, useContext, useReducer } from "react";
 
 type FormTodoProviderProps = {
     children: ReactNode
@@ -28,6 +28,87 @@ type Params = {
     status: string
 }
 
+interface State {
+    isFormOpen: boolean;
+    isInputOpen: boolean;
+    query: Params[]; 
+    todos: Params[];
+    darkMode: boolean;
+}
+
+interface Action {
+    type: string;
+    payload?: any;
+}
+
+const initialState: State = {
+    isFormOpen: false,
+    isInputOpen: false,
+    query: [],
+    todos: [],
+    darkMode: true,
+}
+
+function reducer(state: State, action: Action) {
+    switch (action.type) {
+        case "formOpen":
+            return {
+                ...state, isFormOpen: !state.isFormOpen
+            }
+
+        case "isDarkMode":
+            return {
+                ...state, darkMode: !state.darkMode
+            }
+        
+        case "deleteTodo":
+            return {
+                ...state, todos: state.todos.filter((todo) => todo.id !== action.payload),
+                query: state.query.filter((todo) => todo.id !== action.payload)
+            }
+
+        case "newTodo":
+            return {
+                ...state, todos: [...state.todos, action.payload], isFormOpen: false
+            }
+
+        case "finishedTodo":
+            return {
+                ...state, todos: state.todos.map((todo) => {
+                    if(todo.id === action.payload) {
+                        return {...todo, status: "finished"}
+                    }
+                    return todo
+                    }),
+                    query: state.query.map((query) => {
+                        if(query.id === action.payload) {
+                            return {...query, status: "finished"}
+                        }
+                        return query
+                    })
+            }
+        
+        case "inputOpen":
+            return {
+                ...state, isInputOpen: !state.isInputOpen,
+                query: []
+            }
+        
+        case "searchText":
+            return {
+                ...state, query: state.todos.filter((todo) => todo.title.includes(action.payload))
+            }
+
+        case "clearFinishedStatus":
+            return {
+                ...state, todos: state.todos.filter((todo) => todo.status !== "finished")
+            }
+
+        default:
+            throw new Error("Unknown action type")
+    }
+}
+
 const FormTodoContext = createContext<FormTodoContextType | null>(null)
 
 function useFormTodoContext() {
@@ -38,75 +119,45 @@ function useFormTodoContext() {
 }
 
 function FormTodoProvider ({children}: FormTodoProviderProps) {
-    const [isFormOpen, setIsFormOpen] = useState<boolean>(false)
-    const [isInputOpen, setIsInputOpen] = useState<boolean>(false)
-    const [query, setQuery] = useState<Params[]>([])
-    const [darkMode, setDarkMode] = useState<boolean>(true)
-    const [todos, setTodos] = useState(() => {
-        const localValue = localStorage.getItem("ITEMS")
-        if (localValue == null) return []
+    const [{ query, todos, darkMode, isFormOpen, isInputOpen }, dispatch] = useReducer(reducer, initialState)
     
-        return JSON.parse(localValue)
-      })
-    
-      useEffect(() => {
-        localStorage.setItem("ITEMS", JSON.stringify(todos))
-      }, [todos])
-
     const handleDarkMode = () => {
-        setDarkMode((dark) => !dark)
+        dispatch({ type: "isDarkMode" })
     }
-
+    
     const handleFormOpen = () => {
-        setIsFormOpen(true)
+        dispatch({ type: "formOpen" })
       }
-
+    
     const handleDeleteTodo = (id: string) => {
-        setTodos((todos) => todos.filter((todo) => todo.id !== id))
-        setQuery((query) => query.filter((todo) => todo.id !== id))
+        dispatch({ type: "deleteTodo", payload: id })
     }
-
+    
     const handleCloseForm = () => {
-        setIsFormOpen(false)
+        dispatch({ type: "formOpen" })
     }
-
+    
     const addNewTodo = (title: string, task: string, statusValue: string) => {
         if (!title || !task) return
-
+    
+        dispatch({ type: "newTodo", payload: {id: crypto.randomUUID(), title: title, task: task, status: statusValue} })
         
-        setTodos((todos) => [...todos, {id: crypto.randomUUID(), title: title, task: task, status: statusValue}])
-        setIsFormOpen(false)
     }
-
+    
     const handleFinishedTodo = (id:string) => {
-        const finishedTodo = todos.map((todo) => {
-            if(todo.id === id) {
-                return {...todo, status: "finished"}
-            }
-            return todo
-        })
-        setTodos(finishedTodo)
-
-        const finishedQuery = query.map((query) => {
-            if(query.id === id) {
-                return {...query, status: "finished"}
-            }
-            return query
-        })
-        setQuery(finishedQuery)
+        dispatch({ type: "finishedTodo", payload: id })
     }
-
+    
     const handleInputOpen = () => {
-        setIsInputOpen((i) => !i)
-        setQuery([])
+       dispatch({ type: "inputOpen" })
     }
-
+    
     const handleSearchText = (title:string) => {
-        setQuery(todos.filter((todo) => todo.title.includes(title)))
+        dispatch({ type: "searchText", payload: title })
     }
-
+    
     const clearFinished = () => {
-        setTodos((todos) => todos.filter((todo) => todo.status !== "finished"))
+        dispatch({ type: "clearFinishedStatus" })
     }
 
       return (
