@@ -13,10 +13,10 @@ export default function App() {
   return (
   <div className={`${darkMode && "dark"}`}>
     <div className="bg-white dark:bg-main h-screen w-100 text-main-text p-3 overflow-y-scroll relative">
-      <div className='flex gap-2 fixed left-10'>
-      <FormGroup>
-        <FormControlLabel className='dark:text-white text-black' control={<Switch onChange={handleDarkMode} defaultChecked />} label="Dark Mode" />
-      </FormGroup>
+      <div className='flex gap-2 sticky left-10'>
+        <FormGroup>
+          <FormControlLabel className='dark:text-white text-black' control={<Switch onChange={handleDarkMode} defaultChecked />} label="Dark Mode" />
+        </FormGroup>
       </div>
       {isFormOpen && <div className="bg-main bg-opacity-70 absolute inset-0"></div>}
       <Header />
